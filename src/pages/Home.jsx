@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Card from '../components/Card';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../context/User';
 
 const Home = () => {
-    
+  const {auth} = useContext(UserContext)
   const {loading, error, data} = useQuery(BOOKS)
-
-    
-
     if (loading) return <p>Loading...</p>
     if(error) return <p>Error !</p>
-    console.log(data);
     console.count()
+    console.log(auth);
     return (
         <div className='container'>
             <h1> Home Page</h1>
+            <Link to='/signup'>Signup</Link>
+            <Link to='/login'>Login</Link>
             <div className='row'>
             {data.books.data.map(item => {
               return (
@@ -24,7 +25,7 @@ const Home = () => {
                   title={item.attributes.title} 
                   author={item.attributes.author}
                   image={"http://localhost:1337" + item.attributes.image.data.attributes.url}
-                  category={item.attributes.categories.data.map(item => <span> {item.attributes.name} </span>)}
+                  category={item.attributes.categories.data.map(item => <span key={item.attributes.name}> {item.attributes.name} </span>)}
                   alt={item.attributes.title}
                   link={`book/${item.id}`}
                   />
