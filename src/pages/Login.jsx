@@ -7,13 +7,14 @@ import { UserContext } from '../context/User';
 const Login = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
-    const {setAuth} = useContext(UserContext)
     const navigate = useNavigate()
+    const {setAuth} = useContext(UserContext)
     const [login, { data, loading, error }] = useMutation(LOGIN)
 
     useEffect(() => {
       if (data) {
           localStorage.setItem('token', data.login.jwt)
+          localStorage.setItem('user', data.login.user.username)
           setAuth(true)
           navigate('/')
       }
@@ -23,7 +24,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         login({
-            variables: {identifier: emailRef.current.value, password: passwordRef.current.value}}
+            variables: {identifier: emailRef.current.value, password: passwordRef.current.value}}  
         )
     }
 

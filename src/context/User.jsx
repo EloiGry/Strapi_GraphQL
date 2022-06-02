@@ -4,11 +4,15 @@ const UserContext = createContext({})
 
 const UserContextProvider = props => {
     const [auth, setAuth] = useState(false)
+    console.log("auth", auth);
+
 
     
     useEffect(() => {
-       if(localStorage.getItem("token")) {
+       if(localStorage.getItem('token') && localStorage.getItem('user')) {
            setAuth(true)
+       } else {
+        localStorage.clear()
        }
     },[])
     

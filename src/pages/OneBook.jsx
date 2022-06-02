@@ -1,10 +1,14 @@
 import React from 'react';
+import { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useParams } from 'react-router-dom';
+import { UserContext } from '../context/User';
+import Review from '../components/Review';
 
 const OneBook = () => {
     const {id} = useParams()
     const book = useQuery(BOOK, {variables: {id : id}})
+    const {auth} = useContext(UserContext)
    
     
     if (book.loading) return <p>Loading...</p>
@@ -21,7 +25,14 @@ const OneBook = () => {
                 <h2> {book.data.book.data.attributes.subtitle && book.data.book.data.attributes.subtitle}</h2>
                 <p> {book.data.book.data.attributes.description}</p>
                 <img src={`http://localhost:1337${book.data.book.data.attributes.image.data.attributes.url}`} alt="" width='200px' />
+                {auth ?
+                  (<> 
+                    <Review/>
+                   </>) : 
+                  (<> Veuillez vous connecter pour ajouter une review </>)
+                }
             </div>
+            <br />
             <h5>
                 Recommandations
                 

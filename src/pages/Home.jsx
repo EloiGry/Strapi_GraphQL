@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../context/User';
 
 const Home = () => {
-  const {auth} = useContext(UserContext)
   const {loading, error, data} = useQuery(BOOKS)
     if (loading) return <p>Loading...</p>
     if(error) return <p>Error !</p>
     console.count()
-    console.log(auth);
+
     return (
         <div className='container'>
             <h1> Home Page</h1>
             <Link to='/signup'>Signup</Link>
             <Link to='/login'>Login</Link>
+            <Link to='/logout'> Logout </Link>
             <div className='row'>
             {data.books.data.map(item => {
               return (

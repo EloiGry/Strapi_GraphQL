@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import OneBook from './pages/OneBook';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Logout from './pages/Logout';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:1337/graphql',
@@ -15,6 +16,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
+  console.log("token" ,token);
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -38,6 +40,7 @@ const App = () => {
             <Route exact path="/book/:id" element={<OneBook/>}/>
             <Route exact path="/login" element={<Login/>}/>
             <Route exact path="/signup" element={<Signup/>}/>
+            <Route exact path="/logout" element={<Logout/>}/>
           </Routes>
         </UserContextProvider>
       </ApolloProvider>
